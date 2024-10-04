@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block csslink %}
+    <link rel="stylesheet" href=" {% static 'comment.css' %} "> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+
+{% block title %}
+post details
+{% endblock %}
+
+{% block content %}
+
+<div class="card" style="width: 100%; text-align: center;" >
+    <div class="card-body">
+
+            <h2 class="card-title">{{post_obj.title}}</h5>
+            <h4 class="card-subtitle mb-2 text-body-secondary">Author : {{post_obj.userid.username}}</h6>
+            <i style="font-size: 12px;">Posted on : {{ post_obj.created_at }}</i>
+            <p class="card-text">{{post_obj.content}}</p>
+
+
+            <div style="display: flex; justify-content:  center; gap: 10px;">
+                <form method="post" action="/like?idn={{post_obj.id}}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">
+                        {% if loggeduserobj in post_obj.likeddetails.all %}
+                        <span id="icon"><i class="fas fa-thumbs-up"> {{post_obj.likes}} </i></span>
+                        {% else %}
+                        <span id="icon"><i class="far fa-thumbs-up"> {{post_obj.likes}} </i></span>
+                        {% endif %}
+                    </button>
+                </form>
+
+                <a href="" class="btn btn-warning">Comment Below</a>
+            </div>
+    
+        <br><br>
+        <form class="d-flex" role="search" method="post" action="{% url 'comment' %}">
+            {% csrf_token %}
+            <input class="form-control me-2" type="text" placeholder="Add a Comment Here" name="cnt">
+            <button class="btn btn-outline-success" type="submit">Comment</button>
+        </form>
+        <br>
+        
+        <b>Comment Section</b>
+        {% if comment_obj %}
+            {% for i in comment_obj %}
+            <div style="text-align: left;">
+                <b style="font-size: 16px; color: blue;">{{i.useridUF.username}}</b>
+                <i style="font-size: 12px;"> on : {{i.created_updated_at}}</i>
+                <p style="font-size: 14px; font-weight: 600;">{{i.commentcontent}}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <i style="color: red;">No Comments yet</i>
+        {% endif %}
+   
+    </div>
+</div>
+
+
+{% endblock %}

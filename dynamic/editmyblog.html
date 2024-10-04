@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block csslink %}
+<!-- <link rel="stylesheet" href=" {% static 'css/login_reg.css' %} "> -->
+{% endblock %}
+
+{% block title %}
+Post
+{% endblock %}
+
+{% block content %}
+<h2>Edit your blog here</h2><br>
+
+
+
+<form accept="" method="post">
+    {% csrf_token %}
+    {% if editobj %}
+    <input type="text" name="tl" required placeholder="Enter your Title here" value="{{editobj.title}}"> <br><br>
+    <textarea name="cn" required rows="10px" cols="100%">{{editobj.content}}</textarea><br><br>
+    <input type="submit" class="btn btn-success" value="Update">
+    {% else %}
+    <p>No value selected</p>
+    {% endif %}
+</form>
+
+
+
+
+{% endblock %}

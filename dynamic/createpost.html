@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block csslink %}
+<!-- <link rel="stylesheet" href=" {% static 'css/login_reg.css' %} "> -->
+{% endblock %}
+
+{% block title %}
+Post
+{% endblock %}
+
+{% block content %}
+<h1>post a a blog here</h1><br>
+
+
+
+<form accept="" method="post">
+    {% csrf_token %}
+    <input type="text" name="tl" required placeholder="Enter your Title here"> <br><br>
+    <textarea name="cn" required placeholder="Write your content..." rows="10px" cols="100%"></textarea><br><br>
+    <input type="submit" class="btn btn-success" value="Post">
+</form>
+
+
+
+
+{% endblock %}

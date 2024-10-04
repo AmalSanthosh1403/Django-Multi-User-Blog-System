@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+home
+{% endblock %}
+
+{% block csslink %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+{% endblock %}
+
+{% block content %}
+<h1>Haii {{loggedusername}} </h1>
+
+<div class="allpost">
+    {% if postobjs %}
+    {% for postobj in postobjs %}
+
+    <div class="card" style="width: 250px;">
+        <div class="card-body">
+            <a href="/detailview?idn={{postobj.id}}">
+
+                <h5 class="card-title">{{postobj.title|upper}}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Author : {{postobj.userid.username}}</h6>
+            </a>
+
+            <i style="font-size: 12px;">Posted on : {{ postobj.created_at }}</i>
+            
+            <div style="display: flex; gap: 10px;">
+                <form method="post" action="/like?idn={{postobj.id}}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">
+                        {% if loggeduserobj in postobj.likeddetails.all %}
+                        <span id="icon"><i class="fas fa-thumbs-up"> {{postobj.likes}} </i></span>
+                        {% else %}
+                        <span id="icon"><i class="far fa-thumbs-up"> {{postobj.likes}} </i></span>
+                        {% endif %}
+                    </button>
+                </form>
+                <a href="/detailview?idn={{postobj.id}}" class="btn btn-warning">Comment</a>
+            </div>
+        </div>
+
+    </div>
+
+    {% endfor %}
+    {% else %}
+    <p>No posts available</p>
+    {% endif %}
+</div>
+
+
+{% endblock %}

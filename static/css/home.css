@@ -1,0 +1,16 @@
+.allpost{
+    display: flex; 
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin: 2%;
+    padding-left: 4%;
+}
+
+.allpost a{
+    text-decoration: none;
+}
+
+/* .allpost .card{
+    margin: 1% 0 1% 1%;
+} */
